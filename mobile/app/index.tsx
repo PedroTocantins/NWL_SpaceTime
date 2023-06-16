@@ -5,8 +5,9 @@ import { useRouter } from 'expo-router'
 import { useEffect } from 'react'
 
 import { useAuthRequest, makeRedirectUri } from 'expo-auth-session'
-
+import * as SecureStore from 'expo-secure-store'
 import NLWLogo from '../src/assets/nlw-spacetime-logo.svg'
+import { api } from '../src/lib/api'
 
 const discovery = {
   authorizationEndpoint: 'https://github.com/login/oauth/authorize',
@@ -29,22 +30,22 @@ export default function App() {
     discovery,
   )
 
-  async function handleGithubOAuthCode(code: any) {
-    // const response = await api.post('/register', { code })
-
+  async function handleGithubOAuthCode(code: string) {
+    // const response = await api.post('/register', {
+    //   code,
+    // })
     // const { token } = response.data
-
     // await SecureStore.setItemAsync('token', token)
-
     router.push('/memories')
+    console.log(code)
   }
 
   useEffect(() => {
-    console.log(
-      makeRedirectUri({
-        scheme: 'nlwspacetime',
-      }),
-    )
+    // console.log(
+    //   makeRedirectUri({
+    //     scheme: 'nlwspacetime',
+    //   }),
+    // )
 
     if (response?.type === 'success') {
       const { code } = response.params

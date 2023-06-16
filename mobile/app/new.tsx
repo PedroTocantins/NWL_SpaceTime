@@ -13,7 +13,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Switch } from 'react-native-gesture-handler'
 import { useState } from 'react'
 import * as ImagePicker from 'expo-image-picker'
-// import * as SecureStore from 'expo-secure-store'
+import { api } from '../src/lib/api'
+import * as SecureStore from 'expo-secure-store'
 // import { api } from '../src/lib/api'
 
 export default function Memories() {
@@ -38,42 +39,42 @@ export default function Memories() {
   }
 
   async function handleCreateMemory() {
-    //   const token = await SecureStore.getItemAsync('token')
+    const token = await SecureStore.getItemAsync('token')
 
-    //   let coverUrl = ''
+    let coverUrl = ''
 
-    //   if (preview) {
-    //     const uploadFormData = new FormData()
+    if (preview) {
+      const uploadFormData = new FormData()
 
-    //     uploadFormData.append('file', {
-    //       uri: preview as any,
-    //       name: 'image.jpg',
-    //       type: 'image/jpeg',
-    //     } as any)
+      uploadFormData.append('file', {
+        uri: preview as any,
+        name: 'image.jpg',
+        type: 'image/jpeg',
+      } as any)
 
-    //     const uploadResponse = await api.post('/upload', uploadFormData, {
-    //       headers: {
-    //         'Content-Type': 'multipart/form-data',
-    //       },
-    //     })
+      const uploadResponse = await api.post('/upload', uploadFormData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
 
-    //     coverUrl = uploadResponse.data.fileUrl
-    //     console.log(coverUrl)
-    //   }
+      coverUrl = uploadResponse.data.fileUrl
+      console.log(coverUrl)
+    }
 
-    //   await api.post(
-    //     '/memories',
-    //     {
-    //       content,
-    //       isPublic,
-    //       coverUrl,
-    //     },
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     },
-    //   )
+    await api.post(
+      '/memories',
+      {
+        content,
+        isPublic,
+        coverUrl,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
     router.push('/memories')
   }
 
