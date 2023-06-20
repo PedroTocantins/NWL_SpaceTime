@@ -1,24 +1,13 @@
-import {
-  TouchableOpacity,
-  // TextInput,
-  ScrollView,
-  Image,
-  View,
-  Text,
-} from 'react-native'
+import { TouchableOpacity, ScrollView, Image, View, Text } from 'react-native'
 import NLWLogo from '../src/assets/nlw-spacetime-logo.svg'
 import { Link, useRouter } from 'expo-router'
 import Icon from '@expo/vector-icons/Feather'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-// import { Switch } from 'react-native-gesture-handler'
-// import { useState } from 'react'
-// import * as ImagePicker from 'expo-image-picker'
 import * as SecureStore from 'expo-secure-store'
 import React, { useEffect, useState } from 'react'
 import { api } from '../src/lib/api'
 import dayjs from 'dayjs'
 import ptBr from 'dayjs/locale/pt-br'
-// import { api } from '../src/lib/api'
 
 dayjs.locale(ptBr)
 
@@ -39,7 +28,7 @@ export default function Memories() {
 
     const response = await api.get('/memories', {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `bearer ${token}`,
       },
     })
 
