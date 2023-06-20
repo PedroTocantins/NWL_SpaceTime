@@ -13,7 +13,7 @@ const discovery = {
   authorizationEndpoint: 'https://github.com/login/oauth/authorize',
   tokenEndpoint: 'https://github.com/login/oauth/access_token',
   revocationEndpoint:
-    'https://github.com/settings/connections/applications/27906df7bfa8b7ea5f9e',
+    'https://github.com/settings/connections/applications/b3cf408eb52849668cf8',
 }
 
 export default function App() {
@@ -21,7 +21,7 @@ export default function App() {
 
   const [, response, signInWithGithub] = useAuthRequest(
     {
-      clientId: '27906df7bfa8b7ea5f9e',
+      clientId: 'b3cf408eb52849668cf8',
       scopes: ['identity'],
       redirectUri: makeRedirectUri({
         scheme: 'nlwspacetime',
@@ -31,26 +31,29 @@ export default function App() {
   )
 
   async function handleGithubOAuthCode(code: string) {
-    // const response = await api.post('/register', {
-    //   code,
-    // })
-    // const { token } = response.data
-    // await SecureStore.setItemAsync('token', token)
+    const response = await api.post('/register', {
+      code,
+    })
+    console.log('oi')
+    const { token } = response.data
+    console.log(token)
+    await SecureStore.setItemAsync('token', token)
     router.push('/memories')
-    console.log(code)
   }
 
   useEffect(() => {
-    // console.log(
-    //   makeRedirectUri({
-    //     scheme: 'nlwspacetime',
-    //   }),
-    // )
+    console.log(
+      makeRedirectUri({
+        scheme: 'nlwspacetime',
+      }),
+    )
 
     if (response?.type === 'success') {
+      console.log(response.params)
       const { code } = response.params
+      console.log(code)
       handleGithubOAuthCode(code)
-    }
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response])
 
   return (

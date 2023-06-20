@@ -40,7 +40,7 @@ export default function Memories() {
 
   async function handleCreateMemory() {
     const token = await SecureStore.getItemAsync('token')
-
+    console.log(token)
     let coverUrl = ''
 
     if (preview) {
@@ -61,7 +61,6 @@ export default function Memories() {
       coverUrl = uploadResponse.data.fileUrl
       console.log(coverUrl)
     }
-
     await api.post(
       '/memories',
       {
@@ -71,7 +70,7 @@ export default function Memories() {
       },
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `bearer ${token}`,
         },
       },
     )

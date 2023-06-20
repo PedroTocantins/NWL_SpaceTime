@@ -9,7 +9,6 @@ export async function memoriesRoutes(app: FastifyInstance) {
 
   app.get('/memories', async (request) => {
     // trazer só as memórias do usuário logado
-
     const memories = await prisma.memory.findMany({
       where: {
         userId: request.user.sub,
@@ -53,7 +52,7 @@ export async function memoriesRoutes(app: FastifyInstance) {
   })
 
   // o boolean do zod é 1,
-  app.post('/memories/:id', async (request) => {
+  app.post('/memories', async (request) => {
     const bodySchema = z.object({
       content: z.string(),
       coverUrl: z.string(),
